@@ -1,0 +1,5 @@
+class Shoes {
+    Name
+    Season
+}
+

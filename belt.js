@@ -1,0 +1,5 @@
+class Belt {
+    Name
+    Season
+}
+

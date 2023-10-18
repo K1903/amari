@@ -1,0 +1,5 @@
+class Accessory {
+    Name
+    Season
+}
+
