@@ -10,6 +10,42 @@ export default function App() {
   );
 }
 
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Fall Closet</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Winter Closet</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Summer Closet</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Spring Closet</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
