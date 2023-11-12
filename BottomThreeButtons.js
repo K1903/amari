@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
         height: 80,
         justifyContent: "center",
         alignItems:"center",
-        left:20
+        left:20,
+        backgroundColor: "white"
     },
     centerButton: {
         borderWidth:1.5,
@@ -52,7 +53,8 @@ const styles = StyleSheet.create({
         height: 80,
         justifyContent: "center",
         alignItems:"center",
-        right:20
+        right:20,
+        backgroundColor: "white"
     },
     homeIcon: {
         flex:0.5,
