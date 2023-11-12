@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     horizScroll: {
-        height: 200
+        height: 200,
     },
     lastHorizScroll: {
         height:200,
