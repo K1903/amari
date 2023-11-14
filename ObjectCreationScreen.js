@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Image, CheckBox } from 'react-native';
 import Belt from './Belt'; // Import your specific object constructors
-import Hat from './Hat';
-import Jacket from './Jacket';
-import Pants from './Pants';
-import Shirt from './Shirt';
-import Shoes from './Shoes';
-import Accessory from './Accessory';
+import Hat from './hat.js';
+import Jacket from './jacket.jscket';
+import Pants from './pants.jsnts';
+import Shirt from './shirt.jsirt';
+import Shoes from './shoes.js';
+import Accessory from './accessory.js';
 
 const ObjectCreationScreen = ({ route }) => {
   const [objectType, setObjectType] = useState('');
