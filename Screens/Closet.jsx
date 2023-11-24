@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 })
 
     return (
-        <View>
+        <View style={{backgroundColor:"white"}}>
             <ScrollView style={{paddingTop:100}}>
                 <Text style={styles.headerText}>Hat</Text>
                 <ScrollView horizontal={true} style={styles.horizScroll}><Text>Img here</Text></ScrollView>

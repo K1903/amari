@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
 import { View, TextInput, Button, Image, CheckBox } from 'react-native';
-import Belt from './Belt'; // Import your specific object constructors
+import Belt from './belt.js'; // Import your specific object constructors
 import Hat from './hat.js';
-import Jacket from './jacket.jscket';
-import Pants from './pants.jsnts';
-import Shirt from './shirt.jsirt';
+import Jacket from './jacket.js';
+import Pants from './pants.js';
+import Shirt from './shirt.js';
 import Shoes from './shoes.js';
 import Accessory from './accessory.js';
 

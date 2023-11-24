@@ -1,8 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { BottomThreeButtons } from '../BottomThreeButtons';
+import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
+import ScreenContext from '../Contexts/ScreenContext';
 
 function Homepage(props) {
+  const [screen, setScreen] = useContext(ScreenContext)
+
     const styles = StyleSheet.create({
         container: {
           flex: 1,
@@ -79,7 +84,7 @@ function Homepage(props) {
             <Text style={styles.titleText}>Armari</Text>
           </View>
     
-          <TouchableHighlight style={styles.winterCloset} underlayColor={"#bfbfbf"} onPress={() => alert("winter closet")}>
+          <TouchableHighlight style={styles.winterCloset} underlayColor={"#bfbfbf"} onPress={() => setScreen("closet")}>
             <Text>Winter Closet</Text>
           </TouchableHighlight>
           <TouchableHighlight style={styles.springCloset} underlayColor={"#bfbfbf"} onPress={() => alert("spring closet")}>

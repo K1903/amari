@@ -4,6 +4,7 @@ import { View, Button } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
 const CameraScreen = ({ navigation }) => {
+
   const takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
@@ -15,12 +16,13 @@ const CameraScreen = ({ navigation }) => {
   return (
     <View>
       <RNCamera
-        ref={(ref) => {
+        ref={ref => {
           this.camera = ref;
         }}
         style={{ flex: 1 }}
+        type={RNCamera.Constants.Type.back}
       />
-      <Button title="Take Picture" onPress={takePicture} />
+      <Button title="Take Picture" onPress={() => takePicture()} />
     </View>
   );
 };

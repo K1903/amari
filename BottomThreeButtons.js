@@ -1,21 +1,8 @@
+import { useContext } from "react"
 import { TouchableHighlight } from "react-native"
 import { View, StyleSheet, Text, useWindowDimensions } from "react-native"
 import { Image } from "react-native"
-
-function goToArticle() {
-    // TODO: Navigate to camera
-    alert("clicked article button")
-}
-
-function goHome() {
-    //TODO: Navigate home
-    alert("clicked home button")
-}
-
-function goToSavedOutfits() {
-    //TODO: Navigate to saved outfits
-    alert("clicked saved outfits button")
-}
+import ScreenContext from "./Contexts/ScreenContext"
 
 const styles = StyleSheet.create({
     buttonView: {
@@ -63,17 +50,18 @@ const styles = StyleSheet.create({
 })
 
 export const BottomThreeButtons = () => {
+    const [screen, setScreen] = useContext(ScreenContext);
     return (
         <View style={styles.buttonView}>
-            <TouchableHighlight onPress={goToArticle} style={styles.leftButton} underlayColor={"#bfbfbf"}>
+            <TouchableHighlight onPress={() => setScreen("addArticle")} style={styles.leftButton} underlayColor={"#bfbfbf"}>
                 <Text style={{fontWeight:700, fontSize:16}}>Add an{"\n"}Article</Text>
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={goHome} style={styles.centerButton} underlayColor={"#bfbfbf"}>
+            <TouchableHighlight onPress={() => setScreen("home")} style={styles.centerButton} underlayColor={"#bfbfbf"}>
                 <Image source={require("./assets/HomeIcon.png")} style={styles.homeIcon} alt="Icon of a house, representing the home button"></Image>
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={goToSavedOutfits} style={styles.rightButton} underlayColor={"#bfbfbf"}>
+            <TouchableHighlight onPress={() => setScreen("savedOutfits")} style={styles.rightButton} underlayColor={"#bfbfbf"}>
                 <Text style={{fontWeight:700, fontSize:16}}> Saved{"\n"}Outfits</Text>
             </TouchableHighlight>
         </View>
