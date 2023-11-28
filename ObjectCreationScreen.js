@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { View, TextInput, Button, Image, CheckBox } from 'react-native';
+import { View, TextInput, Button, Image} from 'react-native';
+import Checkbox from 'expo-checkbox';
 import Belt from './belt.js'; // Import your specific object constructors
 import Hat from './hat.js';
 import Jacket from './jacket.js';
@@ -52,7 +53,7 @@ const ObjectCreationScreen = ({ route }) => {
       {/* Checklist for item type */}
       <View>
         {itemTypes.map((type) => (
-          <CheckBox
+          <Checkbox
             key={type}
             title={type}
             checked={objectType === type}
