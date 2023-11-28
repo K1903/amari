@@ -47,7 +47,7 @@ const CameraScreen = ({ navigation }) => {
         flashMode={flash}
         ref={cameraRef}
       >
-        <Button title={'Take Picture'} onPress={takePicture} />
+        <Button title={'Take Picture'} icon="camera" onPress={takePicture} />
       </Camera>
     </View>
   );

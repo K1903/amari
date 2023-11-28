@@ -14,6 +14,7 @@ const ObjectCreationScreen = ({ route }) => {
   const [objectType, setObjectType] = useState('');
   const [season, setSeason] = useState('');
   const [objectName, setObjectName] = useState('');
+  const [isChecked, setChecked] = useState(false);
   const { photo } = route.params;
 
   const itemTypes = ['Belt', 'Hat', 'Jacket', 'Pants', 'Shirt', 'Shoes', 'Accessory'];
@@ -48,7 +49,7 @@ const ObjectCreationScreen = ({ route }) => {
 
   return (
     <View>
-      <Image source={{ uri: photo.uri }} style={{ width: 200, height: 200 }} />
+      <Image source={{ uri: photo.uri }} style={{ width: 400, height: 400 }} />
 
       {/* Checklist for item type */}
       <View>
@@ -56,6 +57,7 @@ const ObjectCreationScreen = ({ route }) => {
           <Checkbox
             key={type}
             title={type}
+            value={isChecked}
             checked={objectType === type}
             onPress={() => setObjectType(type)}
           />
