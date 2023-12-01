@@ -11,3 +11,4 @@ class Shirt {
     }
 }
 
+export default Shirt;

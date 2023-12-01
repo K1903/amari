@@ -1,3 +1,5 @@
+import Shirt from "./shirt";
+
 class Jacket {
     Name
     Season
@@ -11,3 +13,4 @@ class Jacket {
     }
 }
 
+export default Jacket;
