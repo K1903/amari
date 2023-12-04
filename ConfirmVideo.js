@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
 import { Video } from 'expo-av';
 import ScreenContext from './Contexts/ScreenContext';
+import * as MediaLibrary from 'expo-media-library';
+
+
 
 const ConfirmVideo = ({ route }) => {
   const { videoUri } = route.params;
@@ -9,6 +12,7 @@ const ConfirmVideo = ({ route }) => {
 
   function saveVideo() {
     //TODO: Save video here
+    MediaLibrary.saveToLibraryAsync(videoUri.uri)
     setScreen("home")
   }
 

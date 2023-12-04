@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
 import * as MediaLibrary from 'expo-media-library';
+import {Video} from 'expo-av';
 
 
 const VideoScreen = () => {
@@ -11,7 +12,7 @@ const VideoScreen = () => {
   const navigator = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
-
+  const [video, setVideo] = useState();
 
   useEffect(() =>{
     (async () => {
@@ -34,14 +35,23 @@ const VideoScreen = () => {
     return <Text>No Access to Microphone</Text>
   }
 
-  
+
   const startRecording = async () => {
     if (cameraRef.current) {
       try {
-        const video = await cameraRef.current.recordAsync();
         setIsRecording(true);
+
+        let options = {
+          quality: "1080p",
+          maxDuration: 60,
+          mute: false
+        };
+
+        const data = await cameraRef.current.recordAsync(options)
+        setVideo(data)
+        setIsRecording(false);
+        navigator.navigate("ConfirmVideo", {videoUri: data.uri});
         console.log("done recording")
-        navigator.navigate("ConfirmVideo", {videoUri: video.uri});
       } catch (error) {
         console.error('Error:', error);
         setIsRecording(false)
@@ -49,10 +59,11 @@ const VideoScreen = () => {
     }
   };
 
+
   const stopRecording = async () => {
     if (isRecording && cameraRef.current) {
       try {
-        const video = await cameraRef.current.stopRecording();
+        const data = cameraRef.current.stopRecording();
         setIsRecording(false);
       } catch (error) {
         console.error('Error stopping recording:', error);
@@ -89,5 +100,6 @@ const VideoScreen = () => {
     </View>
   );
 };
+
 
 export default VideoScreen;
