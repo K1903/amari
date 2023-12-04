@@ -20,6 +20,7 @@ const CameraScreen = ({ navigation }) => {
     })();
   }, [])
 
+  
   const takePicture = async () => {
     if (cameraRef) {
       try{

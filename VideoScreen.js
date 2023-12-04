@@ -1,13 +1,40 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
+import * as MediaLibrary from 'expo-media-library';
+
 
 const VideoScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
   const cameraRef = useRef(null);
   const navigator = useNavigation();
+  const [hasCameraPermission, setHasCameraPermission] = useState();
+  const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
 
+
+  useEffect(() =>{
+    (async () => {
+      MediaLibrary.requestPermissionsAsync();
+
+      const cameraStatus = await Camera.requestCameraPermissionsAsync();
+      const microphoneStatus = await Camera.requestMicrophonePermissionsAsync();
+
+      setHasCameraPermission(cameraStatus.status === 'granted');
+      setHasMicrophonePermission(microphoneStatus.status === 'granted');
+    })();
+  }, [])
+
+
+  if(hasCameraPermission === false) {
+    return <Text>No Access To Camera</Text>
+  }
+
+  if(hasMicrophonePermission === false){
+    return <Text>No Access to Microphone</Text>
+  }
+
+  
   const startRecording = async () => {
     if (cameraRef.current) {
       try {
