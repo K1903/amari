@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { View, TextInput, Button, Image} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, TextInput, Button, Image, Text, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import Belt from './belt.js'; // Import your specific object constructors
 import Hat from './hat.js';
@@ -9,20 +9,25 @@ import Pants from './pants.js';
 import Shirt from './shirt.js';
 import Shoes from './shoes.js';
 import Accessory from './accessory.js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import ScreenContext from './Contexts/ScreenContext.js';
 
 const ObjectCreationScreen = ({ route }) => {
   const [objectType, setObjectType] = useState('');
   const [season, setSeason] = useState('');
   const [objectName, setObjectName] = useState('');
-  const [isChecked, setChecked] = useState(false);
   const { photo } = route.params;
+  const [screen, setScreen] = useContext(ScreenContext);
+
 
   const itemTypes = ['Belt', 'Hat', 'Jacket', 'Pants', 'Shirt', 'Shoes', 'Accessory'];
 
   const saveObject = () => {
     // Assuming you have a function to save the object, replace this with your logic
-    const newItem = createObject(objectType, season, objectName, photo);
-    console.log('Object saved:', newItem);
+    //const newItem = createObject(objectType, season, objectName, photo);
+    //console.log('Object saved:', newItem);
+    setScreen("home");
   };
 
   const createObject = (type, season, name, photo) => {
@@ -48,24 +53,29 @@ const ObjectCreationScreen = ({ route }) => {
   };
 
   return (
+    <KeyboardAwareScrollView style={{flex:1}}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View>
       <Image source={{ uri: photo.uri }} style={{ width: 400, height: 400 }} />
 
       {/* Checklist for item type */}
       <View>
         {itemTypes.map((type) => (
+          <View style={{flexDirection:"row", marginTop:10, alignItems:"center", marginLeft:10}} key={type}>
           <Checkbox
-            key={type}
+          style={{height:25, width:25}}
             title={type}
-            value={isChecked}
-            checked={objectType === type}
-            onPress={() => setObjectType(type)}
+            value={objectType === type}
+            onValueChange={() => setObjectType(type)}
           />
+          <Text> {type}</Text>
+          </View>
         ))}
       </View>
 
       {/* Season selection */}
       <TextInput
+      style={{borderWidth: 1, height:30, marginTop:10}}
         placeholder="Enter Season"
         value={season}
         onChangeText={(text) => setSeason(text)}
@@ -73,14 +83,22 @@ const ObjectCreationScreen = ({ route }) => {
 
       {/* Name input */}
       <TextInput
+      style={{borderWidth: 1, height:30, marginTop:10}}
         placeholder="Enter Object Name"
         value={objectName}
         onChangeText={(text) => setObjectName(text)}
       />
 
       {/* Save button */}
-      <Button title="Save Object" onPress={saveObject} />
+      <TouchableHighlight 
+      style={{borderWidth:1.5, borderRadius:10, width:150, height:70, justifyContent:"center", alignSelf:"center", alignItems:"center", marginTop:15}}
+      underlayColor={"#bfbfbf"}
+       onPress={() => saveObject()}>
+        <Text style={{fontWeight:600}}>Save Object</Text>
+      </TouchableHighlight>
     </View>
+    </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 
