@@ -1,5 +1,6 @@
 import { Dimensions, Image, ScrollView, Text, TouchableHighlight, View } from "react-native";
 import { BottomThreeButtons } from "../BottomThreeButtons";
+import { useNavigation } from "@react-navigation/native";
 
 const halfWidth = Math.round((Dimensions.get("window").width) / 2);
 
@@ -7,6 +8,10 @@ const halfWidth = Math.round((Dimensions.get("window").width) / 2);
  * Creates an outfit "card" with image, title, and button.
  */
 function Outfit(props) {
+    const navigation = useNavigation();
+    const addLiveFitting = () => {
+        navigation.navigate("VideoScreen");
+    }
 
     return (
         <View>
@@ -16,7 +21,7 @@ function Outfit(props) {
             <TouchableHighlight 
             style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
             underlayColor={"#bfbfbf"}
-            onPress={() => alert("Clicked live fitting button")}>
+            onPress={() => addLiveFitting()}>
             <Text>Add Live Fitting</Text></TouchableHighlight>
 
         </View>     
@@ -31,7 +36,7 @@ function SavedOutfits(props) {
 
     return (
     <View style={{flex:1, backgroundColor:"white"}}>
-    <ScrollView style={{paddingTop:100}}>
+    <ScrollView>
         <View style={{flexDirection:"row", alignSelf:"center", flexWrap:"wrap", width:halfWidth * 2 + 20}}>
             <Outfit/>
             <Outfit/>

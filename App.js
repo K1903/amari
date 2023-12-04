@@ -8,6 +8,7 @@ import CameraScreen from "./CameraScreen"
 import ObjectCreationScreen from './ObjectCreationScreen';
 import AppNavigator from './AppNavigator';
 import ClothingStorage from './ClothingStorage'
+import VideoNavigator from './VideoNavigator.js';
 
 export default function App() {
   const [screen, setScreen] = useState("home");
@@ -22,7 +23,7 @@ export default function App() {
     </ScreenContext.Provider>
   } else if (screen === "savedOutfits") {
     return <ScreenContext.Provider value={[screen, setScreen]}>
-    <SavedOutfits />
+    <VideoNavigator />
     </ScreenContext.Provider>
   } else if (screen === "addArticle") {
     return <ScreenContext.Provider value={[screen, setScreen]}>
