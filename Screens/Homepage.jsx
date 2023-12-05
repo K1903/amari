@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import ScreenContext from '../Contexts/ScreenContext';
 
 function Homepage(props) {
-  const [screen, setScreen] = useContext(ScreenContext)
+    const [screen, setScreen] = useContext(ScreenContext)
 
     const styles = StyleSheet.create({
         container: {
@@ -78,25 +78,30 @@ function Homepage(props) {
         }
       });
 
+    const navigateToCloset = (season) => {
+        //Use season variable to load in the proper clothing
+        setScreen("closet");
+    };
+
     return (
         <View style={styles.container}>
           <View style={styles.titleTextView}>
             <Text style={styles.titleText}>Armari</Text>
           </View>
     
-          <TouchableHighlight style={styles.winterCloset} underlayColor={"#bfbfbf"} onPress={() => setScreen("closet")}>
+          <TouchableHighlight style={styles.winterCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Winter')}>
             <Text>Winter Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.springCloset} underlayColor={"#bfbfbf"} onPress={() => alert("spring closet")}>
+          <TouchableHighlight style={styles.springCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Spring')}>
             <Text>Spring Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.summerCloset} underlayColor={"#bfbfbf"} onPress={() => alert("summer closet")}>
+          <TouchableHighlight style={styles.summerCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Summer')}>
             <Text>Summer Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.fallCloset} underlayColor={"#bfbfbf"} onPress={() => alert("fall closet")}>
+          <TouchableHighlight style={styles.fallCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Fall')}>
             <Text>Fall Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.allClothing} underlayColor={"#bfbfbf"} onPress={() => alert("all clothing")}>
+          <TouchableHighlight style={styles.allClothing} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('All')}>
             <Text>All Clothing</Text>
           </TouchableHighlight>
     

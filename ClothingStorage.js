@@ -15,7 +15,7 @@ class ClothingStorage {
             const data = await AsyncStorage.getItem(this.storageKey);
             if (data !== null) {
                 this.clothingArray = JSON.parse(data);
-                //console.log(this.clothingArray);
+                console.log(this.clothingArray);
             }
         } catch (error) {
             console.error('Error loading clothing data:', error);
@@ -25,6 +25,7 @@ class ClothingStorage {
     async store(clothingItem) {
         this.clothingArray.push(clothingItem);
         await this.saveClothingArray();
+        console.log(this.clothingArray);
     }
 
     async remove(clothingItem) {

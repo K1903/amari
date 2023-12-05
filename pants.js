@@ -11,3 +11,4 @@ class Pants {
     }
 }
 
+export default Pants;

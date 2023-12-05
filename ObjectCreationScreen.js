@@ -12,6 +12,7 @@ import Accessory from './accessory.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import ScreenContext from './Contexts/ScreenContext.js';
+import ClothingStorage from './ClothingStorage';
 
 const ObjectCreationScreen = ({ route }) => {
   const [objectType, setObjectType] = useState('');
@@ -23,10 +24,14 @@ const ObjectCreationScreen = ({ route }) => {
 
   const itemTypes = ['Belt', 'Hat', 'Jacket', 'Pants', 'Shirt', 'Shoes', 'Accessory'];
 
+  const clothingStorage = new ClothingStorage();
+
   const saveObject = () => {
-    // Assuming you have a function to save the object, replace this with your logic
-    //const newItem = createObject(objectType, season, objectName, photo);
-    //console.log('Object saved:', newItem);
+    const newItem = createObject(objectType, season, objectName, photo);
+    if (newItem){
+      clothingStorage.store(newItem);
+    }
+    console.log('Object saved:', newItem);
     setScreen("home");
   };
 

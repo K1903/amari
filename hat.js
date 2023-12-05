@@ -12,3 +12,4 @@ class Hat {
     
 }
 
+export default Hat;

@@ -7,7 +7,6 @@ import HomeScreen from "./HomeScreen"
 import CameraScreen from "./CameraScreen"
 import ObjectCreationScreen from './ObjectCreationScreen';
 import AppNavigator from './AppNavigator';
-import ClothingStorage from './ClothingStorage'
 import VideoNavigator from './VideoNavigator.js';
 
 export default function App() {

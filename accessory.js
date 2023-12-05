@@ -13,3 +13,4 @@ class Accessory {
     
 }
 
+export default Accessory;
