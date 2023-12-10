@@ -6,9 +6,6 @@ class Accessory {
         this.Season = Season
     }
 
-    remove() {
-        return null;
-    }
 
     
 }

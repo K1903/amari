@@ -6,9 +6,6 @@ class Hat {
         this.Season = Season
     }
 
-    remove() {
-        return null;
-    }
     
 }
 

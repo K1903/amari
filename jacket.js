@@ -8,9 +8,6 @@ class Jacket {
         this.Season = Season
     }
 
-    remove() {
-        return null;
-    }
 }
 
 export default Jacket;

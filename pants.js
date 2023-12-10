@@ -6,9 +6,7 @@ class Pants {
         this.Season = Season
     }
 
-    remove() {
-        return null;
-    }
+
 }
 
 export default Pants;

@@ -9,14 +9,6 @@ class Shoes {
         this.Season = Season;
     }
 
-    remove() {
-        return null;
-    }
-
-    inOutfit() {
-        outfit = false;
-    }
-
 }
 
 export default Shoes;

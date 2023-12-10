@@ -6,9 +6,6 @@ class Belt {
         this.Season = Season
     }
 
-    remove() {
-        return null;
-    }
 }
 
 export default Belt;
