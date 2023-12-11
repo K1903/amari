@@ -20,20 +20,16 @@ function Outfit(props) {
     }
     return (
         <View>
-            <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20}></Image>
+            <TouchableHighlight onPress={() => playbackFitting()}>
+                <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20} ></Image>
+            </TouchableHighlight>
+            
             <Text style={{alignSelf:"center", paddingBottom:15, fontSize:18}}>Placeholder Outfit</Text>
             <TouchableHighlight 
             style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
             underlayColor={"#bfbfbf"}
             onPress={() => addLiveFitting()}>
             <Text>Add Live Fitting</Text>
-            </TouchableHighlight>
-
-            <TouchableHighlight 
-            style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
-            underlayColor={"#bfbfbf"}
-            onPress={() => playbackFitting()}>
-            <Text>Play Back Fit</Text>
             </TouchableHighlight>
         </View>     
     );
