@@ -4,26 +4,33 @@ import { useNavigation } from "@react-navigation/native";
 
 const halfWidth = Math.round((Dimensions.get("window").width) / 2);
 
+
 /**
  * Creates an outfit "card" with image, title, and button.
  */
 function Outfit(props) {
     const navigation = useNavigation();
+
     const addLiveFitting = () => {
         navigation.navigate("VideoScreen");
     }
 
+    const playbackFitting = () => {
+        navigation.navigate("PlayBackScreen");
+    }
     return (
         <View>
-
-            <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20}></Image>
+            <TouchableHighlight onPress={() => playbackFitting()}>
+                <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20} ></Image>
+            </TouchableHighlight>
+            
             <Text style={{alignSelf:"center", paddingBottom:15, fontSize:18}}>Placeholder Outfit</Text>
             <TouchableHighlight 
             style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
             underlayColor={"#bfbfbf"}
             onPress={() => addLiveFitting()}>
-            <Text>Add Live Fitting</Text></TouchableHighlight>
-
+            <Text>Add Live Fitting</Text>
+            </TouchableHighlight>
         </View>     
     );
 }
