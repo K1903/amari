@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SavedOutfits from './Screens/SavedOutfits';
 import VideoScreen from "./VideoScreen";
 import ConfirmVideo from './ConfirmVideo';
+import PlayBackScreen from './PlayBackScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const VideoNavigator = () => {
         <Stack.Screen name="SavedOutfits" component={SavedOutfits} />
         <Stack.Screen name="VideoScreen" component={VideoScreen} />
         <Stack.Screen name="ConfirmVideo" component={ConfirmVideo} />
+        <Stack.Screen name="PlayBackScreen" component={PlayBackScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

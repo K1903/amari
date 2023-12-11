@@ -3,17 +3,25 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import { Video } from 'expo-av';
 import ScreenContext from './Contexts/ScreenContext';
 import * as MediaLibrary from 'expo-media-library';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 
 const ConfirmVideo = ({ route }) => {
   const { videoUri } = route.params;
   const [screen, setScreen] = useContext(ScreenContext);
+  const navigator = useNavigation();
 
-  function saveVideo() {
+
     //TODO: Save video here
-    MediaLibrary.saveToLibraryAsync(videoUri.uri)
-    setScreen("home")
+const storeVideo = async (videoUri) => {
+    try{
+      await AsyncStorage.setItem('@videoUri', videoUri);
+    } catch (e) {
+      console.error('Error loading video data:', e)
+    }
+    
+    navigator.navigate('SavedOutfits');
   }
 
   return (
@@ -33,7 +41,7 @@ const ConfirmVideo = ({ route }) => {
       <TouchableHighlight 
       style={{borderWidth:1.5, borderRadius:10, width:150, height:70, justifyContent:"center", alignSelf:"center", alignItems:"center", marginTop:60}}
       underlayColor={"#bfbfbf"}
-      onPress={() => saveVideo()}>
+      onPress={() => storeVideo(videoUri)}>
         <Text>Save Video</Text>
       </TouchableHighlight>
     </View>
