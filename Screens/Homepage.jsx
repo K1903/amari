@@ -77,9 +77,9 @@ function Homepage(props) {
         }
       });
 
-    const navigateToCloset = (season) => {
+    function navigateToCloset(season) {
         //Use season variable to load in the proper clothing
-        setScreen("closet");
+        setScreen(season);
     };
 
     return (
@@ -88,19 +88,19 @@ function Homepage(props) {
             <Text style={styles.titleText}>Armari</Text>
           </View>
     
-          <TouchableHighlight style={styles.winterCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Winter')}>
+          <TouchableHighlight style={styles.winterCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('winter')}>
             <Text>Winter Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.springCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Spring')}>
+          <TouchableHighlight style={styles.springCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('spring')}>
             <Text>Spring Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.summerCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Summer')}>
+          <TouchableHighlight style={styles.summerCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('summer')}>
             <Text>Summer Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.fallCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('Fall')}>
+          <TouchableHighlight style={styles.fallCloset} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('fall')}>
             <Text>Fall Closet</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.allClothing} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('All')}>
+          <TouchableHighlight style={styles.allClothing} underlayColor={"#bfbfbf"} onPress={() => navigateToCloset('all')}>
             <Text>All Clothing</Text>
           </TouchableHighlight>
     

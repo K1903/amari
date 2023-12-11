@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BottomThreeButtons } from '../BottomThreeButtons';
 import ClothingStorage from '../ClothingStorage';
+import ScreenContext from '../Contexts/ScreenContext';
+import { useContext } from 'react';
 
 function Closet(props) {
     const [loadedArray, setLoadedArray] = useState([]);
+    const [screen, setScreen] = useContext(ScreenContext);
+    
 
     useEffect( () => {
         const loadClothingData = async () => {
             try {
                 const clothingStorage = new ClothingStorage();
                 const data = await clothingStorage.loadClothingArray();
+                console.log(data);
                 setLoadedArray(data || []);
             } catch (error) {
                 console.error('Error:', error);
@@ -55,13 +60,13 @@ function Closet(props) {
         <View style={{ backgroundColor: 'white' }}>
             <ScrollView style={{ paddingTop: 100 }}>
                 {/* Render each category */}
-                {renderCategory('Belt', loadedArray.filter(item => item.Type === 'Belt'))}
-                {renderCategory('Hat', loadedArray.filter(item => item.Type === 'Hat'))}
-                {renderCategory('Jacket', loadedArray.filter(item => item.Type === 'Jacket'))}
-                {renderCategory('Pants', loadedArray.filter(item => item.Type === 'Pants'))}
-                {renderCategory('Shirt', loadedArray.filter(item => item.Type === 'Shirt'))}
-                {renderCategory('Shoes', loadedArray.filter(item => item.Type === 'Shoes'))}
-                {renderCategory('Accessory', loadedArray.filter(item => item.Type === 'Accessory'))}
+                {renderCategory('Belt', loadedArray.filter(item => item.Type === 'Belt' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Hat', loadedArray.filter(item => item.Type === 'Hat' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Jacket', loadedArray.filter(item => item.Type === 'Jacket' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Pants', loadedArray.filter(item => item.Type === 'Pants' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Shirt', loadedArray.filter(item => item.Type === 'Shirt' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Shoes', loadedArray.filter(item => item.Type === 'Shoes' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Accessory', loadedArray.filter(item => item.Type === 'Accessory' && item.Season.toLowerCase().includes(screen)))}
             </ScrollView>
             <View style={{ position: 'absolute', bottom: '5%', left: 0, right: 0 }}>
                 <BottomThreeButtons />

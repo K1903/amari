@@ -17,7 +17,8 @@ export default function App() {
     return <ScreenContext.Provider value={[screen, setScreen]}>
     <Homepage />
     </ScreenContext.Provider>
-  } else if (screen === "closet") {
+  } else if (screen === "winter" || screen === "summer" || screen === "fall" || screen === "spring" || screen === "all") {
+    {console.log(screen)}
     return <ScreenContext.Provider value={[screen, setScreen]}>
     <Closet />
     </ScreenContext.Provider>

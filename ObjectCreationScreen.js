@@ -19,17 +19,22 @@ const ObjectCreationScreen = ({ route }) => {
   const itemTypes = ['Belt', 'Hat', 'Jacket', 'Pants', 'Shirt', 'Shoes', 'Accessory'];
 
   const saveObject = async () => {
-
-    const newItem = new Clothing(objectType, season, objectName, photo);
-    try {
-      const clothingStorage = new ClothingStorage();
-      await clothingStorage.loadClothingArray();
-      await clothingStorage.store(newItem);
-    } catch (error) {
-      console.error('Error:', error);
+    if (!objectType) {
+      alert("You must pick a type of clothing!")
+    } else if (season.toLowerCase() !== "winter" && season.toLowerCase() !== "fall" && season.toLowerCase() !== "spring" && season.toLowerCase() !== "summer") {
+      alert("Season must be either fall, winter, spring, or summer!")
+    } else {
+      const newItem = new Clothing(objectType, (season+"all"), objectName, photo);
+      try {
+        const clothingStorage = new ClothingStorage();
+        await clothingStorage.loadClothingArray();
+        await clothingStorage.store(newItem);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      console.log('Object saved:', newItem);
+      setScreen("home");
     }
-    console.log('Object saved:', newItem);
-    setScreen("home");
   };
 
   return (
