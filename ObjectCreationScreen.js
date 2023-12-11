@@ -1,18 +1,12 @@
 
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { View, TextInput, Button, Image, Text, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import Checkbox from 'expo-checkbox';
-import Belt from './belt.js'; // Import your specific object constructors
-import Hat from './hat.js';
-import Jacket from './jacket.js';
-import Pants from './pants.js';
-import Shirt from './shirt.js';
-import Shoes from './shoes.js';
-import Accessory from './accessory.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import ScreenContext from './Contexts/ScreenContext.js';
 import ClothingStorage from './ClothingStorage';
+import Clothing from "./Clothing";
 
 const ObjectCreationScreen = ({ route }) => {
   const [objectType, setObjectType] = useState('');
@@ -24,37 +18,18 @@ const ObjectCreationScreen = ({ route }) => {
 
   const itemTypes = ['Belt', 'Hat', 'Jacket', 'Pants', 'Shirt', 'Shoes', 'Accessory'];
 
-  const clothingStorage = new ClothingStorage();
+  const saveObject = async () => {
 
-  const saveObject = () => {
-    const newItem = createObject(objectType, season, objectName, photo);
-    if (newItem){
-      clothingStorage.store(newItem);
+    const newItem = new Clothing(objectType, season, objectName, photo);
+    try {
+      const clothingStorage = new ClothingStorage();
+      await clothingStorage.loadClothingArray();
+      await clothingStorage.store(newItem);
+    } catch (error) {
+      console.error('Error:', error);
     }
     console.log('Object saved:', newItem);
     setScreen("home");
-  };
-
-  const createObject = (type, season, name, photo) => {
-    switch (type) {
-      case 'Belt':
-        return new Belt(name, season, photo); // Replace with your Belt constructor
-      case 'Hat':
-        return new Hat(name, season, photo); // Replace with your Hat constructor
-      case 'Jacket':
-        return new Jacket(name, season, photo); // Replace with your Jacket constructor
-      case 'Pants':
-        return new Pants(name, season, photo); // Replace with your Pants constructor
-      case 'Shirt':
-        return new Shirt(name, season, photo); // Replace with your Shirt constructor
-      case 'Shoes':
-        return new Shoes(name, season, photo); // Replace with your Shoes constructor
-      case 'Accessory':
-        return new Accessory(name, season, photo); // Replace with your Accessory constructor
-      default:
-        console.warn('Unknown object type:', type);
-        return null;
-    }
   };
 
   return (
@@ -95,7 +70,7 @@ const ObjectCreationScreen = ({ route }) => {
       />
 
       {/* Save button */}
-      <TouchableHighlight 
+      <TouchableHighlight
       style={{borderWidth:1.5, borderRadius:10, width:150, height:70, justifyContent:"center", alignSelf:"center", alignItems:"center", marginTop:15}}
       underlayColor={"#bfbfbf"}
        onPress={() => saveObject()}>

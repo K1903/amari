@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { BottomThreeButtons } from '../BottomThreeButtons';
-import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
 import ScreenContext from '../Contexts/ScreenContext';
 

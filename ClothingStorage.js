@@ -7,7 +7,6 @@ class ClothingStorage {
     constructor() {
         this.storageKey = 'clothingData';
         this.clothingArray = [];
-        this.loadClothingArray();
     }
 
     async loadClothingArray() {
@@ -15,21 +14,23 @@ class ClothingStorage {
             const data = await AsyncStorage.getItem(this.storageKey);
             if (data !== null) {
                 this.clothingArray = JSON.parse(data);
-                console.log(this.clothingArray);
             }
+            return this.clothingArray;
         } catch (error) {
             console.error('Error loading clothing data:', error);
+            throw error;
         }
     }
 
     async store(clothingItem) {
         this.clothingArray.push(clothingItem);
-        await this.saveClothingArray();
         console.log(this.clothingArray);
+        await this.saveClothingArray();
     }
 
     async remove(clothingItem) {
         this.clothingArray = this.clothingArray.filter(item => item !== clothingItem);
+        console.log(this.clothingArray);
         await this.saveClothingArray();
     }
 
