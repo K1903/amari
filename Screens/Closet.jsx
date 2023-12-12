@@ -5,6 +5,7 @@ import ClothingStorage from '../ClothingStorage';
 import ScreenContext from '../Contexts/ScreenContext';
 import { useContext } from 'react';
 import OutfitStorage from "../OutfitStorage";
+import * as FileSystem from 'expo-file-system';
 
 function Closet(props) {
     const [loadedClothingArray, setLoadedClothingArray] = useState([]);
@@ -120,18 +121,24 @@ function Closet(props) {
     }
 
     async function deleteItem() {
-        try{    
-            await clothingStorage.loadClothingArray();
-            await clothingStorage.remove(itemToDel);
-            const data = await clothingStorage.loadClothingArray();
-            console.log("Data after deletion:", data);
-            setLoadedClothingArray(data || []);
-            closeModal();
-            alert("Item successfully deleted")
+        try {
+          await clothingStorage.loadClothingArray();
+          const updatedArray = loadedClothingArray.filter((item) => item !== itemToDel);
+      
+          const imageUriToDelete = itemToDel.Image.uri;
+      
+          await FileSystem.deleteAsync(imageUriToDelete, { idempotent: true });
+      
+          setLoadedClothingArray(updatedArray);
+          await clothingStorage.remove(itemToDel);
+      
+          closeModal();
+          alert('Item successfully deleted');
         } catch (error) {
-            console.error('Error deleting item:', error);
+          console.error('Error deleting item:', error);
         }
-    }
+      }
+    
 
     return (
         <View style={{backgroundColor: "white"}}>
