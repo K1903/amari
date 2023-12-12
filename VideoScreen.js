@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
 import * as MediaLibrary from 'expo-media-library';
 import {Video} from 'expo-av';
+import { useVideoContext } from './VideoContext';
 
-
-const VideoScreen = () => {
+const VideoScreen = ({route}) => {
   const [isRecording, setIsRecording] = useState(false);
   const cameraRef = useRef(null);
   const navigator = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
   const [video, setVideo] = useState();
+  const {setKey} = useVideoContext();
 
   useEffect(() =>{
     (async () => {
@@ -50,7 +51,7 @@ const VideoScreen = () => {
         const data = await cameraRef.current.recordAsync(options)
         setVideo(data)
         setIsRecording(false);
-        navigator.navigate("ConfirmVideo", {videoUri: data.uri});
+        navigator.navigate("ConfirmVideo", {videoUri: data.uri},);
         console.log("done recording")
       } catch (error) {
         console.error('Error:', error);

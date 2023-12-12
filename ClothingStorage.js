@@ -29,8 +29,7 @@ class ClothingStorage {
     }
 
     async remove(clothingItem) {
-        this.clothingArray = this.clothingArray.filter(item => item !== clothingItem);
-        console.log(this.clothingArray);
+        this.clothingArray = this.clothingArray.filter(item => item.Image.uri !== clothingItem.Image.uri);
         await this.saveClothingArray();
     }
 
