@@ -1,6 +1,9 @@
 import { Dimensions, Image, ScrollView, Text, TouchableHighlight, View } from "react-native";
 import { BottomThreeButtons } from "../BottomThreeButtons";
 import { useNavigation } from "@react-navigation/native";
+import ClothingStorage from "../ClothingStorage";
+import {useEffect, useState} from "react";
+import OutfitStorage from "../OutfitStorage";
 
 const halfWidth = Math.round((Dimensions.get("window").width) / 2);
 
@@ -40,6 +43,22 @@ function Outfit(props) {
  * saved outfits and pass info it Outfit component
  */
 function SavedOutfits(props) {
+
+    const [loadedArray, setLoadedArray] = useState([]);
+
+    useEffect( () => {
+        const loadOutfitData = async () => {
+            try {
+                const outfitStorage = new OutfitStorage();
+                const data = await outfitStorage.loadOutfitArray();
+                setLoadedArray(data || []);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        loadOutfitData();
+    }, []);
 
     return (
     <View style={{flex:1, backgroundColor:"white"}}>

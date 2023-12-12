@@ -4,13 +4,15 @@ import { BottomThreeButtons } from '../BottomThreeButtons';
 import ClothingStorage from '../ClothingStorage';
 import ScreenContext from '../Contexts/ScreenContext';
 import { useContext } from 'react';
+import OutfitStorage from "../OutfitStorage";
 
 function Closet(props) {
-    const [loadedArray, setLoadedArray] = useState([]);
+    const [loadedClothingArray, setLoadedClothingArray] = useState([]);
     const [screen, setScreen] = useContext(ScreenContext);
     const [modalVisible, setModalVisible] = useState(false);
     const [itemToDel, setItemToDel] = useState(null);
-    const clothingStorage = new ClothingStorage();
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [allOutfits, setAllOutfits] = useState([]);
     
 
     useEffect( () => {
@@ -18,7 +20,7 @@ function Closet(props) {
             try {
                 const clothingStorage = new ClothingStorage();
                 const data = await clothingStorage.loadClothingArray();
-                setLoadedArray(data || []);
+                setLoadedClothingArray(data || []);
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -42,21 +44,67 @@ function Closet(props) {
             marginBottom:250
         },
         imageStyle: {
-            width: 200, // Adjust the width as needed
-            height: 200, // Adjust the height as needed
+            width: 200,
+            height: 200,
             marginHorizontal: 5,
         },
+        selectedImageStyle: {
+            opacity: 0.5,
+        },
+        makeOutfitButtonHalf: {
+            borderWidth: 1.5,
+            borderRadius: 10,
+            width: 150,
+            height: 70,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+            backgroundColor: '#4CAF50',
+            opacity: 0.5,
+        },
+        makeOutfitButtonFull: {
+            opacity: 1,
+        },
     });
+
+    const handleMakeOutfit = async () => {
+        if (selectedImages.length < 2){
+            alert("Select 2 or More Articles of Clothing");
+        } else {
+            const outfitStorage = new OutfitStorage();
+            await outfitStorage.loadOutfitArray();
+            const outfit = selectedImages;
+            await outfitStorage.store(outfit);
+            alert("Outfit Saved");
+            console.log("Outfit saved: " + outfit);
+            console.log(outfitStorage.outfitArray);
+            setSelectedImages([]);
+        }
+    };
+
+
+    const handleImagePress = (image) => {
+        setSelectedImages((prevSelected) => {
+            if (prevSelected.includes(image)) {
+                return prevSelected.filter((selectedImage) => selectedImage !== image);
+            } else {
+                return [...prevSelected, image];
+            }
+        });
+    };
+
 
     const renderCategory = (category, images) => (
         <View key={category}>
             <Text style={styles.headerText}>{category}</Text>
             <ScrollView horizontal={true} style={category === "Accessory" ? styles.lastHorizScroll : styles.horizScroll}>
                 {images.map((image, index) => (
-                    <TouchableOpacity key={index} onLongPress={() => openModal(image)}>
-                        <Image source={{ uri: image.Image.uri }} style={styles.imageStyle} />
+                    <TouchableOpacity key={index} onLongPress={() => openModal(image)} onPress={() => handleImagePress(image)}>
+                        <Image source={{ uri: image.Image.uri }} style={[styles.imageStyle,
+                                   selectedImages.includes(image) && styles.selectedImageStyle,
+                               ]} />
                     </TouchableOpacity>
-                    
                 ))}
             </ScrollView>
         </View>
@@ -83,15 +131,23 @@ function Closet(props) {
 
     return (
         <View style={{backgroundColor: "white"}}>
-            <ScrollView style={{paddingTop: 100}}>
-                {/* Render each category */}
-                {renderCategory('Belt', loadedArray.filter(item => item.Type === 'Belt' && item.Season.toLowerCase().includes(screen)))}
-                {renderCategory('Hat', loadedArray.filter(item => item.Type === 'Hat' && item.Season.toLowerCase().includes(screen)))}
-                {renderCategory('Jacket', loadedArray.filter(item => item.Type === 'Jacket' && item.Season.toLowerCase().includes(screen)))}
-                {renderCategory('Pants', loadedArray.filter(item => item.Type === 'Pants' && item.Season.toLowerCase().includes(screen)))}
-                {renderCategory('Shirt', loadedArray.filter(item => item.Type === 'Shirt' && item.Season.toLowerCase().includes(screen)))}
-                {renderCategory('Shoes', loadedArray.filter(item => item.Type === 'Shoes' && item.Season.toLowerCase().includes(screen)))}
-                {renderCategory('Accessory', loadedArray.filter(item => item.Type === 'Accessory' && item.Season.toLowerCase().includes(screen)))}
+            <TouchableHighlight
+                style={[styles.makeOutfitButtonHalf,
+                    selectedImages.length > 1 && styles.makeOutfitButtonFull,]}
+                underlayColor={"#bfbfbf"}
+                onPress={handleMakeOutfit}
+            >
+                <Text style={{ fontWeight: 600 }}>Make Outfit</Text>
+            </TouchableHighlight>
+
+            <ScrollView style={{paddingTop: 10}}>
+                {renderCategory('Belts', loadedClothingArray.filter(item => item.Type === 'Belt' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Hats', loadedClothingArray.filter(item => item.Type === 'Hat' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Jackets', loadedClothingArray.filter(item => item.Type === 'Jacket' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Pants', loadedClothingArray.filter(item => item.Type === 'Pants' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Shirts', loadedClothingArray.filter(item => item.Type === 'Shirt' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Shoes', loadedClothingArray.filter(item => item.Type === 'Shoes' && item.Season.toLowerCase().includes(screen)))}
+                {renderCategory('Accessories', loadedClothingArray.filter(item => item.Type === 'Accessory' && item.Season.toLowerCase().includes(screen)))}
             </ScrollView>
             <Modal visible={modalVisible}>
             <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
