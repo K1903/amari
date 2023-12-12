@@ -78,7 +78,6 @@ function Homepage(props) {
       });
 
     function navigateToCloset(season) {
-        //Use season variable to load in the proper clothing
         setScreen(season);
     };
 
