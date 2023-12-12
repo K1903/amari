@@ -30,8 +30,8 @@ class OutfitStorage {
 
     async remove(outfit) {
         let found = [];
-        for (let i = 0; i < this.outfitArray.length; i++){
-            const outfitToCheck = this.outfitArray[i];
+        for (const element of this.outfitArray){
+            const outfitToCheck = element;
             if (outfitToCheck.length === outfit.length){
                 for (let j = 0; j < outfit.length; j++){
                     if (outfitToCheck[j].Name !== outfit[j].Name){
