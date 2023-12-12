@@ -14,6 +14,8 @@ const halfWidth = Math.round((Dimensions.get("window").width) / 2);
  * Creates an outfit "card" with image, title, and button.
  */
 function Outfit(props) {
+    const { removeOutfit } = props;
+
     const navigation = useNavigation();
 
     const addLiveFitting = () => {
@@ -28,6 +30,12 @@ function Outfit(props) {
 
     return (
         <View>
+            <TouchableHighlight 
+                style={{ borderWidth: 1.5, width: 50, height: 25, alignSelf: "center", alignItems: "center", justifyContent: "center" }}
+                underlayColor={"#bfbfbf"}
+                onPress={() => removeOutfit(outfit)}>
+                <Text>Remove All Outfits</Text>
+            </TouchableHighlight>
             <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
                 <TouchableHighlight onPress={() => playbackFitting()}>
                     <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20} ></Image>
@@ -44,10 +52,10 @@ function Outfit(props) {
             
             <Text style={{alignSelf:"center", paddingBottom:15, fontSize:18}}>Placeholder Outfit</Text>
             <TouchableHighlight 
-            style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
-            underlayColor={"#bfbfbf"}
-            onPress={() => addLiveFitting()}>
-            <Text>Add Live Fitting</Text>
+                style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
+                underlayColor={"#bfbfbf"}
+                onPress={() => addLiveFitting()}>
+                <Text>Add Live Fitting</Text>
             </TouchableHighlight>
         </View>     
     );
@@ -60,6 +68,17 @@ function Outfit(props) {
 function SavedOutfits(props) {
     const {videoKey, setKey} = useVideoContext();
     const [loadedArray, setLoadedArray] = useState([]);
+
+    const removeOutfit = async (outfit) => {
+        try {
+          const outfitStorage = new OutfitStorage();
+          await outfitStorage.remove(outfit);
+          const data = await outfitStorage.loadOutfitArray();
+          setLoadedArray(data || []);
+        } catch (error) {
+          console.error('Error removing outfit:', error);
+        }
+      };
 
     useEffect( () => {
         const loadOutfitData = async () => {
@@ -80,7 +99,7 @@ function SavedOutfits(props) {
     <ScrollView>
         <View style={{flexDirection:"row", alignSelf:"center", flexWrap:"wrap", width:halfWidth * 2 + 20}}>
             {loadedArray.map((item, index) => (
-                <Outfit key={index} item={item} />
+                <Outfit key={index} item={item} removeOutfit={removeOutfit} />
             ))}
         </View>
     </ScrollView>

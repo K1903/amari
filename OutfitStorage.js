@@ -27,6 +27,16 @@ class OutfitStorage {
         console.log(this.outfitArray);
         await this.saveOutfitArray();
     }
+    
+    async removeOutfitArray() {
+        try {
+          await AsyncStorage.removeItem(this.storageKey);
+          this.outfitArray = [];
+        } catch (error) {
+          console.error('Error removing outfit data:', error);
+          throw error;
+        }
+      }
 
     async remove(outfit) {
         this.outfitArray = this.outfitArray.filter(item => item !== outfit);
