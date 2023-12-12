@@ -13,8 +13,8 @@ function Closet(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [itemToDel, setItemToDel] = useState(null);
     const [selectedImages, setSelectedImages] = useState([]);
-    const [allOutfits, setAllOutfits] = useState([]);
-    const clothingStorage = useMemo(() => new ClothingStorage(), []); 
+    const clothingStorage = useMemo(() => new ClothingStorage(), []);
+    const outfitStorage = new OutfitStorage();
 
     useEffect( () => {
         const loadClothingData = async () => {
@@ -72,13 +72,11 @@ function Closet(props) {
         if (selectedImages.length < 2){
             alert("Select 2 or More Articles of Clothing");
         } else {
-            const outfitStorage = new OutfitStorage();
             await outfitStorage.loadOutfitArray();
             const outfit = selectedImages;
             await outfitStorage.store(outfit);
             alert("Outfit Saved");
             console.log("Outfit saved: " + outfit);
-            console.log(outfitStorage.outfitArray);
             setSelectedImages([]);
         }
     };
@@ -123,6 +121,19 @@ function Closet(props) {
 
     async function deleteItem() {
         try {
+            const outfitsToDel = [];
+            await outfitStorage.loadOutfitArray();
+            for (let i = 0; i < outfitStorage.outfitArray.length; i++){
+                for (let j = 0; j < outfitStorage.outfitArray[i].length; j++){
+                    if (outfitStorage.outfitArray[i][j].Name === itemToDel.Name){
+                        outfitsToDel.push(outfitStorage.outfitArray[i]);
+                        break;
+                    }
+                }
+            }
+            for (let i = 0; i < outfitsToDel.length; i++){
+                await outfitStorage.remove(outfitsToDel[i]);
+            }
           await clothingStorage.loadClothingArray();
           const updatedArray = loadedClothingArray.filter((item) => item !== itemToDel);
       
