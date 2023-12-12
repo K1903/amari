@@ -13,12 +13,11 @@ function Closet(props) {
     const [itemToDel, setItemToDel] = useState(null);
     const [selectedImages, setSelectedImages] = useState([]);
     const [allOutfits, setAllOutfits] = useState([]);
-    
+    const clothingStorage = useMemo(() => new ClothingStorage(), []); 
 
     useEffect( () => {
         const loadClothingData = async () => {
             try {
-                const clothingStorage = new ClothingStorage();
                 const data = await clothingStorage.loadClothingArray();
                 setLoadedClothingArray(data || []);
             } catch (error) {
@@ -121,12 +120,17 @@ function Closet(props) {
     }
 
     async function deleteItem() {
-        await clothingStorage.loadClothingArray();
-        await clothingStorage.remove(itemToDel);
-        const data = await clothingStorage.loadClothingArray();
-        setLoadedArray(data || []);
-        closeModal();
-        alert("Item successfully deleted")
+        try{    
+            await clothingStorage.loadClothingArray();
+            await clothingStorage.remove(itemToDel);
+            const data = await clothingStorage.loadClothingArray();
+            console.log("Data after deletion:", data);
+            setLoadedClothingArray(data || []);
+            closeModal();
+            alert("Item successfully deleted")
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
     }
 
     return (
