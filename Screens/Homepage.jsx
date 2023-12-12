@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { BottomThreeButtons } from '../BottomThreeButtons';
 import { useContext } from 'react';
 import ScreenContext from '../Contexts/ScreenContext';
+import { useVideoContext } from '../VideoContext';
 
 function Homepage(props) {
+  const {videoKey, setKey} = useVideoContext();
     const [screen, setScreen] = useContext(ScreenContext)
 
     const styles = StyleSheet.create({

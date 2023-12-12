@@ -16,7 +16,9 @@ export default function App() {
 
   if (screen === "home") {
     return <ScreenContext.Provider value={[screen, setScreen]}>
-    <Homepage />
+      <VideoProvider>
+        <Homepage />
+        </VideoProvider>
     </ScreenContext.Provider>
   } else if (screen === "winter" || screen === "summer" || screen === "fall" || screen === "spring" || screen === "all") {
     return <ScreenContext.Provider value={[screen, setScreen]}>

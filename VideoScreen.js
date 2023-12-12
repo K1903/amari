@@ -14,7 +14,6 @@ const VideoScreen = ({route}) => {
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
   const [video, setVideo] = useState();
   const {setKey} = useVideoContext();
-  const {outfitID} = route.params
 
   useEffect(() =>{
     (async () => {
@@ -52,7 +51,7 @@ const VideoScreen = ({route}) => {
         const data = await cameraRef.current.recordAsync(options)
         setVideo(data)
         setIsRecording(false);
-        navigator.navigate("ConfirmVideo", {videoUri: data.uri, outfitID},);
+        navigator.navigate("ConfirmVideo", {videoUri: data.uri},);
         console.log("done recording")
       } catch (error) {
         console.error('Error:', error);

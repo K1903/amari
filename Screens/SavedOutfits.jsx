@@ -5,6 +5,8 @@ import ClothingStorage from "../ClothingStorage";
 import {useEffect, useState} from "react";
 import OutfitStorage from "../OutfitStorage";
 import React, { useContext } from 'react';
+import { useVideoContext } from '../VideoContext';
+
 const halfWidth = Math.round((Dimensions.get("window").width) / 2);
 
 
@@ -56,7 +58,7 @@ function Outfit(props) {
  * saved outfits and pass info it Outfit component
  */
 function SavedOutfits(props) {
-
+    const {videoKey, setKey} = useVideoContext();
     const [loadedArray, setLoadedArray] = useState([]);
 
     useEffect( () => {

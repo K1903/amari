@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VideoContext = createContext();
 
@@ -12,7 +13,23 @@ export const VideoProvider = ({ children }) => {
   const setKey = () => {
     const uniqueKey = generateUniqueKey();
     setVideoKey(uniqueKey);
+    AsyncStorage.setItem('videoKey', uniqueKey);
   };
+
+  useEffect(() => {
+    const loadKey = async () => {
+      try {
+        const storedKey = await AsyncStorage.getItem('videoKey');
+        if (storedKey) {
+          setVideoKey(storedKey);
+        }
+      } catch (error) {
+        console.error('Error loading videoKey from AsyncStorage:', error);
+      }
+    };
+
+    loadKey();
+  }, []); 
 
   return (
     <VideoContext.Provider value={{ videoKey, setKey }}>
