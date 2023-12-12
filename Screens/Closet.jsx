@@ -49,7 +49,7 @@ function Closet(props) {
             marginHorizontal: 5,
         },
         selectedImageStyle: {
-            opacity: 0.5,
+            opacity: 0.3,
         },
         makeOutfitButtonHalf: {
             borderWidth: 1.5,
@@ -101,6 +101,7 @@ function Closet(props) {
             <ScrollView horizontal={true} style={category === "Accessory" ? styles.lastHorizScroll : styles.horizScroll}>
                 {images.map((image, index) => (
                     <TouchableOpacity key={index} onLongPress={() => openModal(image)} onPress={() => handleImagePress(image)}>
+                        <Text style={{marginHorizontal:5}}>{image.Name}</Text>
                         <Image source={{ uri: image.Image.uri }} style={[styles.imageStyle,
                                    selectedImages.includes(image) && styles.selectedImageStyle,
                                ]} />

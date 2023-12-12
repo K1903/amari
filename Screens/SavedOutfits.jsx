@@ -1,4 +1,4 @@
-import { Dimensions, Image, ScrollView, Text, TouchableHighlight, View } from "react-native";
+import {Dimensions, Image, ScrollView, Text, TextInput, TouchableHighlight, View} from "react-native";
 import { BottomThreeButtons } from "../BottomThreeButtons";
 import { useNavigation } from "@react-navigation/native";
 import ClothingStorage from "../ClothingStorage";
@@ -15,6 +15,10 @@ const halfWidth = Math.round((Dimensions.get("window").width) / 2);
  */
 function Outfit(props) {
 
+    const outfit = props.item;
+    const removeOutfit = props.removeOutfit;
+    const [editableText, setEditableText] = useState('Outfit Name');
+
     const navigation = useNavigation();
 
     const addLiveFitting = () => {
@@ -25,16 +29,18 @@ function Outfit(props) {
         navigation.navigate("PlayBackScreen");
     }
 
-    const outfit = props.item;
-    const removeOutfit = props.removeOutfit;
+    const handleTextChange = (text) => {
+        setEditableText(text);
+    };
+
 
     return (
         <View>
             <TouchableHighlight 
-                style={{ borderWidth: 1.5, width: 50, height: 25, alignSelf: "center", alignItems: "center", justifyContent: "center" }}
+                style={{ borderWidth: 1.5, width: 55, height: 25, alignSelf: "center", alignItems: "center", justifyContent: "center" }}
                 underlayColor={"#bfbfbf"}
                 onPress={() => removeOutfit(outfit)}>
-                <Text>Remove All Outfits</Text>
+                <Text>Remove</Text>
             </TouchableHighlight>
             <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
                 <TouchableHighlight onPress={() => playbackFitting()}>
@@ -44,13 +50,18 @@ function Outfit(props) {
                     <View key={index} style={{ marginRight: 10 }}>
                         <Image
                             source={{ uri: clothingItem.Image.uri }}
-                            style={{ width: 100, height: 100, borderRadius: 5 }}
+                            style={{ height:halfWidth - 20, width:halfWidth - 20, borderRadius: 10 }}
                         />
                     </View>
                 ))}
             </ScrollView>
-            
-            <Text style={{alignSelf:"center", paddingBottom:15, fontSize:18}}>Placeholder Outfit</Text>
+
+            <TextInput
+                style={{borderWidth: 1, borderColor: '#ccc', padding: 10, fontSize: 16,}}
+                value={editableText}
+                onChangeText={handleTextChange}
+                placeholder="Type here..."
+            />
             <TouchableHighlight 
                 style={{borderWidth:1.5, width: 100, height: 50, alignSelf:"center", alignItems:"center", justifyContent:"center"}}
                 underlayColor={"#bfbfbf"}
