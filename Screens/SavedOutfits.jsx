@@ -21,11 +21,24 @@ function Outfit(props) {
     const playbackFitting = () => {
         navigation.navigate("PlayBackScreen");
     }
+
+    const outfit = props.item;
+
     return (
         <View>
-            <TouchableHighlight onPress={() => playbackFitting()}>
-                <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20} ></Image>
-            </TouchableHighlight>
+            <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+                <TouchableHighlight onPress={() => playbackFitting()}>
+                    <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20} ></Image>
+                </TouchableHighlight>
+                {outfit.map((clothingItem, index) => (
+                    <View key={index} style={{ marginRight: 10 }}>
+                        <Image
+                            source={{ uri: clothingItem.Image.uri }}
+                            style={{ width: 100, height: 100, borderRadius: 5 }}
+                        />
+                    </View>
+                ))}
+            </ScrollView>
             
             <Text style={{alignSelf:"center", paddingBottom:15, fontSize:18}}>Placeholder Outfit</Text>
             <TouchableHighlight 
@@ -64,9 +77,9 @@ function SavedOutfits(props) {
     <View style={{flex:1, backgroundColor:"white"}}>
     <ScrollView>
         <View style={{flexDirection:"row", alignSelf:"center", flexWrap:"wrap", width:halfWidth * 2 + 20}}>
-            <Outfit/>
-            <Outfit/>
-            <Outfit/>
+            {loadedArray.map((item, index) => (
+                <Outfit key={index} item={item} />
+            ))}
         </View>
     </ScrollView>
     <BottomThreeButtons></BottomThreeButtons>
