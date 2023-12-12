@@ -7,25 +7,6 @@ import OutfitStorage from "../OutfitStorage";
 import React, { useContext } from 'react';
 const halfWidth = Math.round((Dimensions.get("window").width) / 2);
 
-/**
- * Screen to view all saved outfits. Will have to iterate thru an array of
- * saved outfits and pass info it Outfit component
- */
-function SavedOutfits(props) {
-    
-    return (
-    <View style={{flex:1, backgroundColor:"white"}}>
-    <ScrollView>
-        <View style={{flexDirection:"row", alignSelf:"center", flexWrap:"wrap", width:halfWidth * 2 + 20}}>
-            <Outfit/>
-            <Outfit/>
-            <Outfit/>
-        </View>
-    </ScrollView>
-    <BottomThreeButtons></BottomThreeButtons>
-    </View>
-    );
-}
 
 /**
  * Creates an outfit "card" with image, title, and button.
