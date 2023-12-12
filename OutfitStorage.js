@@ -27,19 +27,23 @@ class OutfitStorage {
         console.log(this.outfitArray);
         await this.saveOutfitArray();
     }
-    
-    async removeOutfitArray() {
-        try {
-          await AsyncStorage.removeItem(this.storageKey);
-          this.outfitArray = [];
-        } catch (error) {
-          console.error('Error removing outfit data:', error);
-          throw error;
-        }
-      }
 
     async remove(outfit) {
-        this.outfitArray = this.outfitArray.filter(item => item !== outfit);
+        let found = [];
+        for (let i = 0; i < this.outfitArray.length; i++){
+            const outfitToCheck = this.outfitArray[i];
+            if (outfitToCheck.length === outfit.length){
+                for (let j = 0; j < outfit.length; j++){
+                    if (outfitToCheck[j].Name !== outfit[j].Name){
+                        break;
+                    }
+                    if (j === outfit.length - 1){
+                        found = outfitToCheck;
+                    }
+                }
+            }
+        }
+        this.outfitArray = this.outfitArray.filter(item => item !== found);
         await this.saveOutfitArray();
     }
 

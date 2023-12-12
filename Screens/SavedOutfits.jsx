@@ -14,7 +14,6 @@ const halfWidth = Math.round((Dimensions.get("window").width) / 2);
  * Creates an outfit "card" with image, title, and button.
  */
 function Outfit(props) {
-    const { removeOutfit } = props;
 
     const navigation = useNavigation();
 
@@ -27,6 +26,7 @@ function Outfit(props) {
     }
 
     const outfit = props.item;
+    const removeOutfit = props.removeOutfit;
 
     return (
         <View>
@@ -68,31 +68,29 @@ function Outfit(props) {
 function SavedOutfits(props) {
     const {videoKey, setKey} = useVideoContext();
     const [loadedArray, setLoadedArray] = useState([]);
+    const outfitStorage = new OutfitStorage();
 
     const removeOutfit = async (outfit) => {
         try {
-          const outfitStorage = new OutfitStorage();
+            await outfitStorage.loadOutfitArray();
           await outfitStorage.remove(outfit);
-          const data = await outfitStorage.loadOutfitArray();
+          const data = outfitStorage.outfitArray;
           setLoadedArray(data || []);
         } catch (error) {
           console.error('Error removing outfit:', error);
         }
       };
 
-    useEffect( () => {
-        const loadOutfitData = async () => {
+    const loadOutfitData = async () => {
             try {
-                const outfitStorage = new OutfitStorage();
                 const data = await outfitStorage.loadOutfitArray();
                 setLoadedArray(data || []);
             } catch (error) {
                 console.error('Error:', error);
             }
-        };
+    };
 
-        loadOutfitData();
-    }, []);
+    loadOutfitData();
 
     return (
     <View style={{flex:1, backgroundColor:"white"}}>
