@@ -40,7 +40,7 @@ function Outfit(props) {
                 <TouchableHighlight onPress={() => playbackFitting()}>
                     <Image source={require("../assets/PixelArmoire.png")} height={halfWidth - 20} width={halfWidth - 20} ></Image>
                 </TouchableHighlight>
-                {outfit.map((clothingItem, index) => (
+                {Array.isArray(outfit) && outfit.map((clothingItem, index) => (
                     <View key={index} style={{ marginRight: 10 }}>
                         <Image
                             source={{ uri: clothingItem.Image.uri }}
